@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Schedule - {{ super() }}{% endblock %}
+
+{% block page_content %}
+  <div class="page-header">
+    <h1>Schedule</h1>
+  </div>
+  {{ program_macros.render_programs(programs) }}
+{% endblock %}
+

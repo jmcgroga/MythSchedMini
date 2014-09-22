@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Upcoming - {{ super() }}{% endblock %}
+
+{% block page_content %}
+  {% if recording %}
+    <div class="page-header">
+      <h1>Recording</h1>
+    </div>
+    {{ program_macros.render_programs(recording, True, True) }}
+  {% endif %}
+
+  <div class="page-header">
+    <h1>Upcoming</h1>
+  </div>
+  {{ program_macros.render_programs(upcoming, True, False) }}
+
+  <div class="page-header">
+    <h1>Skipping</h1>
+  </div>
+  {{ program_macros.render_programs(skipping, True, False, True) }}
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript">
+MythSchedMini.startReloadTimer();
+</script>
+{% endblock %}

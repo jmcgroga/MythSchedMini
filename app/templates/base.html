@@ -1,0 +1,58 @@
+{% extends "bootstrap/base.html" %}
+
+{% import "programs.html" as program_macros %}
+
+{% block title %}MythTV Scheduler{% endblock %}
+
+{% block navbar %}
+<div role="navigation" class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed"
+              data-toggle="collapse" data-target="#navBarCollapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">MythTV Scheduler</a>
+    </div>
+    <div id="navbarCollapse" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Upcoming</a></li>
+        <li><a href="/recorded">Recorded</a></li>
+        <li><a href="/schedule">Schedule</a></li>
+        <li><a href="/add_schedule">Add Schedule</a></li>
+        <li><a href="/status">Status</a></li>
+      </ul>
+      <ul class="nav navbar-nav pull-right">
+        <li class=""><p class="navbar-text">Updated: {{ moment().format('MMMM D, YYYY h:mm:ss A') }}</p></li>
+        <li class=""><p class="navbar-text" id="backend_status"></p></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="page-header">
+    {% block page_content %}{% endblock %}
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<!-- {{ moment.include_jquery() }} -->
+{{ moment.include_moment() }}
+<script type="text/javascript" src="{{ url_for('static', filename='js/mythschedmini.js', _external=True) }}"></script>
+{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<style>
+body { padding-top: 70px; }
+</style>
+{% endblock %}
