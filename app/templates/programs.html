@@ -1,4 +1,4 @@
-{% macro render_programs(programs, show_date, show_duration, show_rec_status) %}
+{% macro render_programs(programs, show_date, show_duration, show_rec_status, show_menu) %}
   <table class="table">
     <thead>
       <th>Title</th>
@@ -17,10 +17,10 @@
       {% for p in programs %}
         {% if p.recstatus is not none %}
           <tr>
-            <td style="width: 300px">{{ p.title }}</td>
+            <td class="program_title" style="width: 300px">{{ p.title }}</td>
             <td style="width: 450px">
               {% if p.subtitle %}
-                {{ p.subtitle }}<br />
+                <span class="program_subtitle">{{ p.subtitle }}</span><br />
               {% endif %}
               {% if p.description %}
                 <small>{{ p.description }}</small>
@@ -51,20 +51,39 @@
             {% endif %}
             {% if show_rec_status %}
               <td>
+                {% if p.recstatus not in [2,3,4,8,11,12] %}
+                  {{ p.recstatus }}
+                {% endif %}
+                {% if p.recstatus == 2 %}
+                  Previously Recorded
+                {% endif %}
                 {% if p.recstatus == 3 %}
-                  Already Recorded
-                {% else %}
-                  {% if p.recstatus == 4 %}
-                    Earlier Showing
-                  {% else %}
-                    {{ p.recstatus }}
-                  {% endif %}
+                  Recorded
+                {% endif %}
+                {% if p.recstatus == 4 %}
+                  Earlier Showing
+                {% endif %}
+                {% if p.recstatus == 8 %}
+                  Will Record Later Showing
+                {% endif %}
+                {% if p.recstatus == 11 %}
+                  Never Record This Episode
+                {% endif %}
+                {% if p.recstatus == 12 %}
+                  Recorder Offline
                 {% endif %}
               </td>
             {% endif %}
             {% if show_duration %}
               <td>
                 {{ (p.endtime - p.starttime) | string }}
+              </td>
+            {% endif %}
+            {% if show_menu == 'delete_program' %}
+              <td class="menucell" style="background-color:Gainsboro;width:3px;vertical-align:middle;align:center">
+                <button onclick="clickDeleteButton(this, '{{ p.chanid }}', '{{ p.recstartts }}')" style="display:none;background-color:OrangeRed" class="btn btn-primary" data-toggle="modal" data-target="#modalDeleteProgram">
+  Delete
+</button>
               </td>
             {% endif %}
           </tr>

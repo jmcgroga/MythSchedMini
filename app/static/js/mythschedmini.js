@@ -1,6 +1,7 @@
 ;MythSchedMini = {
     RELOAD: true,
     INTERVAL: 30000,
+    SUSPEND: false,
     clear: function() {
         $('#backend_status').html('');
     },
@@ -34,15 +35,20 @@
         });
     },
     reload: function() {
-        $.getJSON( "poke", function() {
-            location.reload();
-        }).fail(function() {
-            MythSchedMini.showError('Error Requesting Status');
-        }).always(function() {
-            if (MythSchedMini.RELOAD) {
-                setTimeout(MythSchedMini.reload, MythSchedMini.INTERVAL);
-            }
-        });
+        if (MythSchedMini.SUSPEND) {
+            MythSchedMini.SUSPEND = false;
+            setTimeout(MythSchedMini.reload, MythSchedMini.INTERVAL);
+        } else {
+            $.getJSON( "poke", function() {
+                location.reload();
+            }).fail(function() {
+                MythSchedMini.showError('Error Requesting Status');
+            }).always(function() {
+                if (MythSchedMini.RELOAD) {
+                    setTimeout(MythSchedMini.reload, MythSchedMini.INTERVAL);
+                }
+            });
+        }
     },
     startReloadTimer: function() {
         MythSchedMini.RELOAD = true;
