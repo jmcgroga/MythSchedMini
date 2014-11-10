@@ -1,4 +1,4 @@
-{% macro render_programs(programs, show_date, show_duration, show_rec_status, show_menu) %}
+{% macro render_programs(programs, show_date, show_duration, show_rec_status, show_menu, show_progress, today, now, transcoded, hide_recording) %}
   <table class="table">
     <thead>
       <th>Title</th>
@@ -9,15 +9,23 @@
       {% if show_duration %}
         <th>Duration</th>
       {% endif %}
+      {% if show_progress %}
+        <th style="min-width:150px"></th>
+      {% endif %}
       {% if show_rec_status %}
         <th>Status</th>
       {% endif %}
     </thead>
     <tbody>
       {% for p in programs %}
-        {% if p.recstatus is not none %}
+        {% if p.recstatus is not none and not (hide_recording and p.recstatus == -2) %}
           <tr>
-            <td class="program_title" style="width: 300px">{{ p.title }}</td>
+            <td class="program_title" style="width: 300px">
+              {{ p.title }}<br/>
+              {% if p.season %}
+                <p><small>Season: {{ p.season }} Episode: {{ p.episode }}</small></p>
+              {% endif %}
+            </td>
             <td style="width: 450px">
               {% if p.subtitle %}
                 <span class="program_subtitle">{{ p.subtitle }}</span><br />
@@ -79,11 +87,20 @@
                 {{ (p.endtime - p.starttime) | string }}
               </td>
             {% endif %}
+            {% if show_progress %}
+              <td>
+                <div class="progress">
+                  <div class="progress-bar" style="width:{{ ((now - p.recstartts).total_seconds() / (p.recendts - p.recstartts).total_seconds()) * 100  }}%"></div>
+                </div>
+                {{ (now - p.recstartts) | string }} of {{ (p.recendts - p.recstartts) | string }}
+              </td>
+            {% endif %}
             {% if show_menu == 'delete_program' %}
               <td class="menucell" style="background-color:Gainsboro;width:3px;vertical-align:middle;align:center">
                 <button onclick="clickDeleteButton(this, '{{ p.chanid }}', '{{ p.recstartts }}')" style="display:none;background-color:OrangeRed" class="btn btn-primary" data-toggle="modal" data-target="#modalDeleteProgram">
   Delete
-</button>
+</button><br/>
+                {% if p.programid in transcoded %}T{% endif %}
               </td>
             {% endif %}
           </tr>

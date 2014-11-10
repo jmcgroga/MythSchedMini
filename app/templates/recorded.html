@@ -6,7 +6,7 @@
   <div class="page-header">
     <h1>Recorded</h1>
   </div>
-  {{ program_macros.render_programs(programs, True, True, False, 'delete_program') }}
+  {{ program_macros.render_programs(programs, True, True, False, 'delete_program', False, today, now, transcoded, True) }}
   <div class="modal fade" id="modalDeleteProgram" tabindex="-1" role="dialog" aria-labelledby="modalDeleteProgramLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">

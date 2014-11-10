@@ -33,7 +33,8 @@ def upcoming():
                            recording = recording,
                            upcoming = upcoming,
                            skipping = skipping,
-                           tz = eastern, 
+                           tz = eastern,
+                           now = datetime.now(tz=eastern),
                            today = datetime.now().date())
 
 @main.route('/deleteProgram')
@@ -55,8 +56,12 @@ def deleteProgram():
 
 @main.route('/recorded')
 def recorded():
+    with db as cursor:
+        cursor.execute('select r.programid from recorded as r where transcoded=1')
+
     return render_template('recorded.html', 
                            programs = sortprograms(be.getRecordings()),
+                           transcoded = { i[0] for i in cursor },
                            tz = eastern)
 
 @main.route('/schedule')
