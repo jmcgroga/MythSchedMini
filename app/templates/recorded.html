@@ -15,7 +15,14 @@
           <h4 class="modal-title" id="modalDeleteProgramLabel">Delete</h4>
         </div>
         <div id="modalDeleteProgramBody" class="modal-body">
-          Delete Program?
+          <table style="width:100%">
+            <tbody>
+              <tr>
+                <td id="modalDeleteProgramTitle" style="width:50%;vertical-align:top;"></td>
+                <td id="modalDeleteProgramEpisode" style="width:50%;vertical-align:top;"></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <div class="modal-footer">
           <button id="modalDeleteProgramButton" style="background-color:OrangeRed" type="button" class="btn btn-primary">Delete</button>
@@ -50,13 +57,8 @@ $( document ).ready(function() {
         var program_title = $( row ).find('.program_title')[0];
         var program_subtitle = $( row ).find('.program_subtitle')[0];
         
-        console.log(program_subtitle);
-        var body_text = $( program_title ).html();
-
-        if  (program_subtitle) {
-            body_text += ': ' + $( program_subtitle ).html();
-        }
-        $('#modalDeleteProgramBody').html(body_text);
+        $('#modalDeleteProgramTitle').html($(program_title).html());
+        $('#modalDeleteProgramEpisode').html($(program_subtitle).html());
     };
 });
 </script>
