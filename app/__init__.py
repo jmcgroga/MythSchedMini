@@ -14,6 +14,7 @@ def create_app(config_name):
     bootstrap.init_app(app)
     moment.init_app(app)
 
+    from mythschedmini.filters import mythtvtimedeltaformat
     from main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 

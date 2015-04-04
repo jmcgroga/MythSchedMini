@@ -3,6 +3,13 @@
 {% block title %}Upcoming - {{ super() }}{% endblock %}
 
 {% block page_content %}
+  {% if conflicts %}
+    <div class="page-header">
+      <h1>Conflicts</h1>
+    </div>
+    {{ program_macros.render_programs(conflicts, True, False, True) }}
+  {% endif %}
+
   {% if recording %}
     <div class="page-header">
       <h1>Recording</h1>

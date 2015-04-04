@@ -59,8 +59,11 @@
             {% endif %}
             {% if show_rec_status %}
               <td>
-                {% if p.recstatus not in [2,3,4,8,11,12] %}
+                {% if p.recstatus not in [-5,2,3,4,7,8,11,12] %}
                   {{ p.recstatus }}
+                {% endif %}
+                {% if p.recstatus == -5 %}
+                  Missed Recording
                 {% endif %}
                 {% if p.recstatus == 2 %}
                   Previously Recorded
@@ -70,6 +73,9 @@
                 {% endif %}
                 {% if p.recstatus == 4 %}
                   Earlier Showing
+                {% endif %}
+                {% if p.recstatus == 7 %}
+                  Conflict
                 {% endif %}
                 {% if p.recstatus == 8 %}
                   Will Record Later Showing
@@ -92,7 +98,7 @@
                 <div class="progress">
                   <div class="progress-bar" style="width:{{ ((now - p.recstartts).total_seconds() / (p.recendts - p.recstartts).total_seconds()) * 100  }}%"></div>
                 </div>
-                {{ (now - p.recstartts) | string }} of {{ (p.recendts - p.recstartts) | string }}
+                {{ (now - p.recstartts) | mythtvtimedeltaformat }} of {{ (p.recendts - p.recstartts) | mythtvtimedeltaformat }}
               </td>
             {% endif %}
             {% if show_menu == 'delete_program' %}

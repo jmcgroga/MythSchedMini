@@ -29,10 +29,13 @@ def upcoming():
 
     skipping = sortprograms([ p for p in be.getPendingRecordings() if p.recstatus != -1 ], reverse=False)
 
+    conflicts = sortprograms([ p for p in be.getPendingRecordings() if p.recstatus == 7 ], reverse=False)
+
     return render_template('upcoming.html',
                            recording = recording,
                            upcoming = upcoming,
                            skipping = skipping,
+                           conflicts = conflicts,
                            tz = eastern,
                            now = datetime.now(tz=eastern),
                            today = datetime.now().date())
