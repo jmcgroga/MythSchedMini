@@ -59,33 +59,34 @@
             {% endif %}
             {% if show_rec_status %}
               <td>
-                {% if p.recstatus not in [-5,2,3,4,7,8,11,12] %}
+                {% if p.recstatus not in [-14,-11,-10,-9,-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9,10,11,12] %}
                   {{ p.recstatus }}
                 {% endif %}
-                {% if p.recstatus == -5 %}
-                  Missed Recording
-                {% endif %}
-                {% if p.recstatus == 2 %}
-                  Previously Recorded
-                {% endif %}
-                {% if p.recstatus == 3 %}
-                  Recorded
-                {% endif %}
-                {% if p.recstatus == 4 %}
-                  Earlier Showing
-                {% endif %}
-                {% if p.recstatus == 7 %}
-                  Conflict
-                {% endif %}
-                {% if p.recstatus == 8 %}
-                  Will Record Later Showing
-                {% endif %}
-                {% if p.recstatus == 11 %}
-                  Never Record This Episode
-                {% endif %}
-                {% if p.recstatus == 12 %}
-                  Recorder Offline
-                {% endif %}
+                {% if p.recstatus == -14 %}Failing{% endif %}
+                {% if p.recstatus == -11 %}Missed Future Recording{% endif %}
+                {% if p.recstatus == -10 %}Tuning{% endif %}
+                {% if p.recstatus == -9 %}Failed{% endif %}
+                {% if p.recstatus == -8 %}Tuner Busy{% endif %}
+                {% if p.recstatus == -7 %}Low Disk Space{% endif %}
+                {% if p.recstatus == -6 %}Cancelled{% endif %}
+                {% if p.recstatus == -5 %}Missed Recording{% endif %}
+                {% if p.recstatus == -4 %}Recording Aborted{% endif %}
+                {% if p.recstatus == -3 %}Recorded{% endif %}
+                {% if p.recstatus == -2 %}Recording{% endif %}
+                {% if p.recstatus == -1 %}Will Record{% endif %}
+                {% if p.recstatus == 0 %}Unknown{% endif %}
+                {% if p.recstatus == 1 %}Don't Record{% endif %}
+                {% if p.recstatus == 2 %}Previously Recorded{% endif %}
+                {% if p.recstatus == 3 %}Recorded{% endif %}
+                {% if p.recstatus == 4 %}Earlier Showing{% endif %}
+                {% if p.recstatus == 5 %}Too Many Recordings{% endif %}
+                {% if p.recstatus == 6 %}Not Listed{% endif %}
+                {% if p.recstatus == 7 %}Conflict{% endif %}
+                {% if p.recstatus == 8 %}Will Record Later Showing{% endif %}
+                {% if p.recstatus == 9 %}Repeat{% endif %}
+                {% if p.recstatus == 10 %}Inactive{% endif %}
+                {% if p.recstatus == 11 %}Never Record This Episode{% endif %}
+                {% if p.recstatus == 12 %}Recorder Offline{% endif %}
               </td>
             {% endif %}
             {% if show_duration %}

@@ -27,7 +27,7 @@ def upcoming():
     recording = [ be.getCurrentRecording(str(recorder)) for recorder in be.getRecorderList() if be.isRecording(recorder) ]
     upcoming = sortprograms(be.getUpcomingRecordings(), reverse=False)
 
-    skipping = sortprograms([ p for p in be.getPendingRecordings() if p.recstatus != -1 ], reverse=False)
+    skipping = sortprograms([ p for p in be.getPendingRecordings() if p.recstatus != -1 and p.recstatus != -2 ], reverse=False)
 
     conflicts = sortprograms([ p for p in be.getPendingRecordings() if p.recstatus == 7 ], reverse=False)
 
