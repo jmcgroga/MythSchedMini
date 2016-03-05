@@ -1,0 +1,15 @@
+import socket
+
+HOSTNAME = socket.gethostname()
+IP = ''
+
+class LocalConfig(object):
+    HOSTNAME = globals()['HOSTNAME']
+    IP = globals()['IP']
+    ARTWORK_DIR = ''
+    WATCH_NOW_DEST_DIR = ''
+    WATCH_NOW_DELETE_DIR = ''
+    WATCH_NOW_BASE_URL = 'http://%s/hdstreamer/' % (IP)
+    FFMPEG_COMMAND = 'ffmpeg'
+    SEGMENTER_COMMAND = 'mediastreamsegmenter'
+    WATCH_NOW_CONVERTER = """%(ffmpeg_command)s -i %(input_file)s -loglevel quiet -y -hide_banner -nostats -c:v libx264 -crf 22 -x264opts qpmin=4:cabac=0:ref=2:b-pyramid=none:weightb=0:weightp=0:vbv-maxrate=9500:vbv-bufsize=9500 -vf scale=-1:720 -profile:v baseline -level 3.1 -vbsf h264_mp4toannexb -ac 2 -c:a aac -vbr 3 -strict -2 -f mpegts - | %(segmenter_command)s -p -t 20 -b %(url)s -f %(output_directory)s"""

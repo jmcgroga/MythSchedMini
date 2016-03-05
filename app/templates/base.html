@@ -23,6 +23,7 @@
         <li><a href="/recorded">Recorded</a></li>
         <li><a href="/schedule">Schedule</a></li>
         <li><a href="/add_schedule">Add Schedule</a></li>
+        <li><a href="/live">Live!</a></li>
         <li><a href="/status">Status</a></li>
       </ul>
       <ul class="nav navbar-nav pull-right">
@@ -52,7 +53,5 @@
 
 {% block styles %}
 {{ super() }}
-<style>
-body { padding-top: 70px; }
-</style>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 {% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Live - {{ super() }}{% endblock %}
+
+{% block page_content %}
+  <div class="page-header">
+    <h1>Live</h1>
+  </div>
+  <table>
+    <tr>
+      <th style="width:50px">Channel</th>
+      <th style="width:80px"></th>
+      <th style="width:300px">Show</th>
+      <th>Episode</th>
+      <th style="width:100px">Start</th>
+      <th style="width:100px">End</th>
+      <th></th>
+    </tr>
+  {% for p in programs %}
+    <tr style="height:45px">
+      <td style="text-align:right;padding-right:10px">{{ p.0 }}</td>
+      <td>{{ p.1 }}</td>
+      <td>{{ p.2 }}</td>
+      <td>{{ p.3 }}</td>
+      <td>{{ p.4|mythtvtimeonly }}</td>
+      <td>{{ p.5|mythtvtimeonly }}</td>
+      <td>
+        <a target="_blank" href="/watchnow/live/{{ p.0 }}/{{ p.2 }}/{{ p.3 }}" class="btn btn-primary">Watch Now</a>
+      </td>
+    </tr>
+  {% endfor %}
+  </table>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+</script>
+{% endblock %}

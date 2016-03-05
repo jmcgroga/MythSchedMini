@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Watch Now! - {{ super() }}{% endblock %}
+
+{% block page_content %}
+  <h1>{{ title }}: {{ subtitle }} will begin shortly.</h1>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript">
+$( document ).ready(function() {
+  setTimeout(function() {
+      location.reload()
+  }, 5000);
+});
+</script>
+{% endblock %}

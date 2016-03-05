@@ -6,7 +6,49 @@
   <div class="page-header">
     <h1>Recorded</h1>
   </div>
-  {{ program_macros.render_programs(programs, True, True, False, 'delete_program', False, today, now, transcoded, True) }}
+      {% for title,episodes in programs|dictsort %}
+        <div>
+          <img src="/artwork/{{ title }}" height="75" width="75"></img>
+          <span class="program_title" style="padding-left:15px;font-size:28px;">{{ title }}</span>
+        </div>
+        <table class="table">
+          <thead>
+            <th style="width: 100px">Season</th>
+            <th style="width: 100px">Episode</th>
+            <th style="width: 500px">Title</th>
+            <th style="width: 125px"></th>
+          </thead>
+          <tbody>
+            {% for season,episode in episodes %}
+              <tr>
+                {% if season %}
+                  <td>Season {{ episode.season }}</td>
+                {% else %}
+                  <td></td>
+                {% endif %}
+                {% if episode.episode %}
+                  <td>Episode {{ episode.episode }}</td>
+                {% else %}
+                  <td></td>
+                {% endif %}
+                <td class="program_subtitle">
+                  {{ episode.subtitle }}<br/>
+                  {% if episode.description %}
+                    <small>{{ episode.description }}</small><br/>
+                 {% endif %}
+                 <small>Recorded: {{ episode.starttime|mythtvfulldate }}</small>
+                </td>
+                <td style="text-align:center">
+                  <a target="_blank" href="/watchnow/watch/{{ episode.chanid }}/{{ episode.recstartts }}" class="btn btn-primary">Watch Now</a>
+                </td>
+                <td class="menucell" style="background-color:Gainsboro;width:3px;text-align:center">
+                  <a onclick="clickDeleteButton(this, '{{ episode.chanid }}', '{{ episode.recstartts }}', '{{ episode.title }}')" style="display:none;background-color:OrangeRed;text-align:center" class="btn btn-primary" data-toggle="modal" data-target="#modalDeleteProgram">Delete</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endfor %}
   <div class="modal fade" id="modalDeleteProgram" tabindex="-1" role="dialog" aria-labelledby="modalDeleteProgramLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -37,7 +79,7 @@
 {{ super() }}
 <script type="text/javascript">
 $( document ).ready(function() {
-    MythSchedMini.startReloadTimer();
+//    MythSchedMini.startReloadTimer();
     $('.menucell').on('mouseover', function(e) {
         $( this ).css('width', '50px');
 //        $( this ).css('background', 'red');
@@ -48,17 +90,19 @@ $( document ).ready(function() {
         $( this ).css('background', 'Gainsboro');
         $( this ).children().css('display', 'none');
     });
-    clickDeleteButton = function(self, chanid, starttime) {
+    clickDeleteButton = function(self, chanid, starttime, title) {
         MythSchedMini.SUSPEND = true;
         $('#modalDeleteProgramButton').click(function(e) {
             window.location = '/deleteProgram?chanid=' + chanid + '&starttime=' + starttime;
         });
         var row = $( self ).parent().parent();
-        var program_title = $( row ).find('.program_title')[0];
         var program_subtitle = $( row ).find('.program_subtitle')[0];
         
-        $('#modalDeleteProgramTitle').html($(program_title).html());
+        $('#modalDeleteProgramTitle').html(title);
         $('#modalDeleteProgramEpisode').html($(program_subtitle).html());
+    };
+    clickWatchNowButton = function(self, chanid, starttime) {
+        window.open('/watchnow/watch/' + chanid + '/' + starttime, '_blank');
     };
 });
 </script>
